@@ -41,75 +41,75 @@
                         Selamat Datang di {{ config('app.name') }}
                     </h1>
                     <p class="lead text-secondary">
-                        Website sederhana ini dibuat menggunakan Laravel + Bootstrap (Sneat Template).
-                        Silakan jelajahi fitur yang tersedia atau mulai dengan login/register.
+                        Aplikasi manajemen produk dan kategori berbasis Laravel & Sneat. Kelola data produk, kategori,
+                        pencarian, pagination, dan notifikasi dengan mudah.
                     </p>
-
                     <div class="mt-4">
                         <a href="{{ route('login') }}" class="btn btn-primary btn-lg px-4 me-2">
-                            Mulai Sekarang
+                            Mulai Manajemen
                         </a>
-
-                        <a href="#destinations" class="btn btn-outline-primary btn-lg px-4">
-                            Lihat Destinasi
+                        <a href="{{ route('products.index') }}" class="btn btn-outline-primary btn-lg px-4">
+                            Lihat Produk
                         </a>
                     </div>
                 </div>
 
                 <div class="col-lg-6 text-center mt-4 mt-lg-0">
-                    <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png" class="img-fluid"
-                        style="max-width: 350px;" alt="Hero Illustration">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" class="img-fluid"
+                        style="max-width: 350px;" alt="Product Management Illustration">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Destinations -->
-    <section id="destinations" class="py-5">
+    <!-- Features Section -->
+    <section id="features" class="py-5">
         <div class="container">
-            <h2 class="fw-bold text-center text-primary mb-5">Holiday Destinations</h2>
+            <h2 class="fw-bold text-center text-primary mb-5">Fitur Utama</h2>
 
             <div class="row g-4">
-                <!-- Card 1 -->
+                <!-- Card 1: Produk -->
                 <div class="col-md-4">
                     <div class="card shadow-sm h-100">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" class="card-img-top"
-                            alt="Beach">
-                        <div class="card-body">
-                            <h5 class="card-title text-primary fw-bold">Beautiful Beach</h5>
-                            <p class="card-text">Nikmati suasana pantai yang indah dan menenangkan.</p>
-                            <a href="#" class="btn btn-primary">Lihat Detail</a>
+                        <div class="card-body text-center">
+                            <i class="bx bx-box text-primary" style="font-size: 2.5rem;"></i>
+                            <h5 class="card-title text-primary fw-bold mt-3">Manajemen Produk</h5>
+                            <p class="card-text">Tambah, edit, hapus, dan cari produk dengan mudah.</p>
+                            @auth
+                                <a href="{{ route('products.index') }}" class="btn btn-primary">Kelola Produk</a>
+                            @endauth
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 2 -->
+                <!-- Card 2: Kategori -->
                 <div class="col-md-4">
                     <div class="card shadow-sm h-100">
-                        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" class="card-img-top"
-                            alt="Mountain">
-                        <div class="card-body">
-                            <h5 class="card-title text-primary fw-bold">Mountain View</h5>
-                            <p class="card-text">Rasakan udara sejuk dan pemandangan pegunungan.</p>
-                            <a href="#" class="btn btn-primary">Lihat Detail</a>
+                        <div class="card-body text-center">
+                            <i class="bx bx-category text-primary" style="font-size: 2.5rem;"></i>
+                            <h5 class="card-title text-primary fw-bold mt-3">Manajemen Kategori</h5>
+                            <p class="card-text">Kelola kategori produk untuk pengelompokan yang rapi.</p>
+                            @auth
+                                <a href="{{ route('categories.index') }}" class="btn btn-primary">Kelola Kategori</a>
+                            @endauth
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 3 -->
+                <!-- Card 3: Notifikasi & Validasi -->
                 <div class="col-md-4">
                     <div class="card shadow-sm h-100">
-                        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e" class="card-img-top"
-                            alt="City Lights">
-                        <div class="card-body">
-                            <h5 class="card-title text-primary fw-bold">City Lights</h5>
-                            <p class="card-text">Jelajahi kota modern dengan lampu gemerlap.</p>
-                            <a href="#" class="btn btn-primary">Lihat Detail</a>
+                        <div class="card-body text-center">
+                            <i class="bx bx-bell text-primary" style="font-size: 2.5rem;"></i>
+                            <h5 class="card-title text-primary fw-bold mt-3">Validasi & Notifikasi</h5>
+                            <p class="card-text">Dapatkan feedback instan saat mengelola data produk dan kategori.</p>
+                            @auth
+                                <a href="{{ route('dashboard') }}" class="btn btn-primary">Pergi ke Dashboard</a>
+                            @endauth
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
