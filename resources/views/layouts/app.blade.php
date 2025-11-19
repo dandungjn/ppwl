@@ -65,6 +65,10 @@
     <script src="{{ asset('sneat/assets/js/dashboards-analytics.js') }}"></script>
     <!-- Github Button -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @stack('scripts')
 </body>
 
 </html>

@@ -13,7 +13,12 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $categories = Category::paginate($perPage);
+        $search = $request->input('search');
+        $query = Category::query();
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+        $categories = $query->paginate($perPage)->appends(['search' => $search]);
         return view('pages.categories.index', compact('categories'));
     }
 
@@ -51,7 +56,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        return view('pages.categories.edit', compact('id'));
+        $category = Category::findOrFail($id);
+        return view('pages.categories.edit', compact('category'));
     }
 
     /**
