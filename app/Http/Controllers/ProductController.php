@@ -3,15 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.products.index');
+        $perPage = $request->input('per_page', 10);
+        $search = $request->input('search');
+        $query = Product::with('category');
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+        $products = $query->paginate($perPage)->appends(['search' => $search]);
+        return view('pages.products.index', compact('products'));
     }
 
     /**
@@ -19,7 +28,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('pages.products.create');
+        $categories = Category::all();
+        return view('pages.products.create', compact('categories'));
     }
 
     /**
@@ -27,7 +37,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'foto' => 'nullable|image|max:2048',
+        ]);
+        if ($request->hasFile('foto')) {
+            $validated['photo'] = $request->file('foto')->store('products', 'public');
+        }
+        Product::create($validated);
+        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
     /**
@@ -35,7 +57,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::with('category')->findOrFail($id);
+        return view('pages.products.show', compact('product'));
     }
 
     /**
@@ -43,7 +66,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        return view('pages.products.edit', compact('id'));
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        return view('pages.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -51,7 +76,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'foto' => 'nullable|image|max:2048',
+        ]);
+        $product = Product::findOrFail($id);
+        if ($request->hasFile('foto')) {
+            $validated['photo'] = $request->file('foto')->store('products', 'public');
+        }
+        $product->update($validated);
+        return redirect()->route('products.index')->with('success', 'Produk berhasil diupdate.');
     }
 
     /**
@@ -59,6 +97,8 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus.');
     }
 }

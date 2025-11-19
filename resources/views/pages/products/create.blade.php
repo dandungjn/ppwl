@@ -22,34 +22,47 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3 align-items-center">
-                                    <label class="col-sm-2 col-form-label" for="nama">Nama</label>
+                                    <label class="col-sm-2 col-form-label" for="name">Nama</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nama" name="nama"
-                                            placeholder="Nama produk">
+                                        <input type="text" class="form-control" id="name" name="name"
+                                            placeholder="Nama produk" value="{{ old('name') }}">
                                     </div>
                                 </div>
                                 <div class="row mb-3 align-items-center">
-                                    <label class="col-sm-2 col-form-label" for="deskripsi">Deskripsi</label>
+                                    <label class="col-sm-2 col-form-label" for="category_id">Kategori</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Deskripsi produk"></textarea>
+                                        <select class="form-select" id="category_id" name="category_id">
+                                            <option value="">Pilih Kategori</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    @if (old('category_id') == $category->id) selected @endif>{{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3 align-items-center">
-                                    <label class="col-sm-2 col-form-label" for="harga">Harga</label>
+                                    <label class="col-sm-2 col-form-label" for="description">Deskripsi</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Deskripsi produk">{{ old('description') }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="row mb-3 align-items-center">
+                                    <label class="col-sm-2 col-form-label" for="price">Harga</label>
                                     <div class="col-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="bx bx-money"></i></span>
-                                            <input type="number" class="form-control" id="harga" name="harga"
+                                            <input type="number" class="form-control" id="price" name="price"
                                                 placeholder="Harga produk">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mb-3 align-items-center">
-                                    <label class="col-sm-2 col-form-label" for="stok">Stok</label>
+                                    <label class="col-sm-2 col-form-label" for="stock">Stok</label>
                                     <div class="col-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="bx bx-package"></i></span>
-                                            <input type="number" class="form-control" id="stok" name="stok"
+                                            <input type="number" class="form-control" id="stock" name="stock"
                                                 placeholder="Stok produk">
                                         </div>
                                     </div>
@@ -68,4 +81,29 @@
             </div>
         </div>
     @endsection
+    @push('scripts')
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    toast: true,
+                    position: 'bottom',
+                    icon: 'success',
+                    title: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+            </script>
+        @endif
+        @if ($errors->any())
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi Kesalahan',
+                    html: `{!! implode('<br>', $errors->all()) !!}`,
+                    showConfirmButton: true,
+                });
+            </script>
+        @endif
+    @endpush
 </x-app-layout>

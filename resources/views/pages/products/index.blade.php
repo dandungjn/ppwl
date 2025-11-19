@@ -10,20 +10,25 @@
                     <i class="bx bx-plus"></i> Tambah Produk
                 </a>
             </x-page-header>
-            <!-- Responsive Table -->
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <!-- Search Form -->
-                    <form action="{{ route('products.index') }}" method="GET" class="d-flex" style="width: 300px;">
-                        <input type="text" name="search" class="form-control form-control me-2" placeholder="Cari..."
-                            value="{{ request('search') }}">
-
+                    <form action="{{ route('products.index') }}" method="GET" class="d-flex align-items-center"
+                        style="width: 100%; gap: 1rem;">
+                        <input type="text" name="search" class="form-control me-2" placeholder="Cari..."
+                            value="{{ request('search') }}" style="max-width: 300px;">
+                        <select name="per_page" class="form-select me-2" style="width: 100px;"
+                            onchange="this.form.submit()">
+                            @foreach([5, 10, 20, 50, 100] as $size)
+                                <option value="{{ $size }}" @if(request('per_page', 10) == $size) selected @endif>
+                                    {{ $size }}/halaman
+                                </option>
+                            @endforeach
+                        </select>
                         <button class="btn btn-primary btn-sm" type="submit">
                             <i class="bx bx-search"></i>
                         </button>
                     </form>
                 </div>
-
                 <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         <table class="table table-bordered">
@@ -32,6 +37,7 @@
                                     <th>No</th>
                                     <th>Foto</th>
                                     <th>Nama</th>
+                                    <th>Kategori</th>
                                     <th>Deskripsi</th>
                                     <th>Harga</th>
                                     <th>Stok</th>
@@ -39,104 +45,86 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><img src="../assets/img/avatars/5.png" alt="Produk 1" class="imgthumbnail"
-                                            width="80"></td>
-                                    <td>Meja Kantor Kayu</td>
-                                    <td>Meja kantor berbahan kayu jati berkualitas tinggi.</td>
-                                    <td>Rp 2.500.000</td>
-                                    <td>10</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger">
-                                            <i class="bx bx-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td><img src="../assets/img/avatars/5.png" alt="Produk 2" class="imgthumbnail"
-                                            width="80"></td>
-                                    <td>Kursi Ergonomis</td>
-                                    <td>Kursi kantor ergonomis dengan penyangga punggung yang
-                                        nyaman.</td>
-                                    <td>Rp 1.250.000</td>
-                                    <td>15</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger">
-                                            <i class="bx bx-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>
-                                        <img src="../assets/img/avatars/5.png" alt="Produk 3" class="imgthumbnail"
-                                            width="80">
-                                    </td>
-                                    <td>Lemari Arsip Besi</td>
-                                    <td>Lemari arsip besi 4 pintu untuk menyimpan dokumen penting.</td>
-                                    <td>Rp 3.750.000</td>
-                                    <td>5</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger">
-                                            <i class="bx bx-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                @forelse ($products as $product)
+                                    <tr>
+                                        <td>{{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}
+                                        </td>
+                                        <td>
+                                            @if($product->photo)
+                                                <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}"
+                                                    class="imgthumbnail" width="80">
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->category ? $product->category->name : '-' }}</td>
+                                        <td>{{ $product->description }}</td>
+                                        <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+                                        <td>{{ $product->stock }}</td>
+                                        <td>
+                                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">
+                                                <i class="bx bx-edit"></i>
+                                            </a>
+                                            <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger btn-delete-product">
+                                                    <i class="bx bx-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="8" class="text-center">Tidak ada produk ditemukan.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
-                    <!-- Pagination -->
                     <div class="mt-3 d-flex justify-content-end">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                <li class="page-item first">
-                                    <a class="page-link" href="javascript:void(0);"><i
-                                            class="tf-icon bx bx-chevrons-left"></i></a>
-                                </li>
-                                <li class="page-item prev">
-                                    <a class="page-link" href="javascript:void(0);"><i
-                                            class="tf-icon bx bx-chevron-left"></i></a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0);">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0);">2</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="javascript:void(0);">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0);">4</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0);">5</a>
-                                </li>
-                                <li class="page-item next">
-                                    <a class="page-link" href="javascript:void(0);"><i
-                                            class="tf-icon bx bx-chevron-right"></i></a>
-                                </li>
-                                <li class="page-item last">
-                                    <a class="page-link" href="javascript:void(0);"><i
-                                            class="tf-icon bx bx-chevrons-right"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                        {{ $products->links('vendor.pagination.sneat') }}
                     </div>
                 </div>
             </div>
         </div>
     @endsection
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.btn-delete-product').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        Swal.fire({
+                            title: 'Yakin ingin menghapus produk ini?',
+                            text: 'Data yang dihapus tidak dapat dikembalikan!',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: 'Ya, hapus!',
+                            cancelButtonText: 'Batal'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                btn.closest('form').submit();
+                            }
+                        });
+                    });
+                });
+                @if (session('success'))
+                    Swal.fire({
+                        toast: true,
+                        position: 'bottom',
+                        icon: 'success',
+                        title: '{{ session('success') }}',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true
+                    });
+                @endif
+            });
+        </script>
+    @endpush
 </x-app-layout>
