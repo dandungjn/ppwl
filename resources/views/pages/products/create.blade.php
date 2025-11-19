@@ -18,20 +18,29 @@
                                 <div class="row mb-3 align-items-center">
                                     <label class="col-sm-2 col-form-label" for="foto">Foto</label>
                                     <div class="col-sm-10">
-                                        <input type="file" class="form-control" id="foto" name="foto">
+                                        <input type="file" class="form-control @error('foto') is-invalid @enderror"
+                                            id="foto" name="foto">
+                                        @error('foto')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row mb-3 align-items-center">
                                     <label class="col-sm-2 col-form-label" for="name">Nama</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            placeholder="Nama produk" value="{{ old('name') }}">
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                            id="name" name="name" placeholder="Nama produk"
+                                            value="{{ old('name') }}">
+                                        @error('name')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row mb-3 align-items-center">
                                     <label class="col-sm-2 col-form-label" for="category_id">Kategori</label>
                                     <div class="col-sm-10">
-                                        <select class="form-select" id="category_id" name="category_id">
+                                        <select class="form-select @error('category_id') is-invalid @enderror"
+                                            id="category_id" name="category_id">
                                             <option value="">Pilih Kategori</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
@@ -39,12 +48,20 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                        @error('category_id')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row mb-3 align-items-center">
                                     <label class="col-sm-2 col-form-label" for="description">Deskripsi</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Deskripsi produk">{{ old('description') }}</textarea>
+                                        <textarea class="form-control @error('description') is-invalid @enderror"
+                                            id="description" name="description" rows="3"
+                                            placeholder="Deskripsi produk">{{ old('description') }}</textarea>
+                                        @error('description')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row mb-3 align-items-center">
@@ -52,9 +69,13 @@
                                     <div class="col-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="bx bx-money"></i></span>
-                                            <input type="number" class="form-control" id="price" name="price"
-                                                placeholder="Harga produk">
+                                            <input type="number" class="form-control @error('price') is-invalid @enderror"
+                                                id="price" name="price" placeholder="Harga produk"
+                                                value="{{ old('price') }}">
                                         </div>
+                                        @error('price')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row mb-3 align-items-center">
@@ -62,9 +83,13 @@
                                     <div class="col-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="bx bx-package"></i></span>
-                                            <input type="number" class="form-control" id="stock" name="stock"
-                                                placeholder="Stok produk">
+                                            <input type="number" class="form-control @error('stock') is-invalid @enderror"
+                                                id="stock" name="stock" placeholder="Stok produk"
+                                                value="{{ old('stock') }}">
                                         </div>
+                                        @error('stock')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row justify-content-end">
@@ -92,16 +117,6 @@
                     showConfirmButton: false,
                     timer: 2000,
                     timerProgressBar: true
-                });
-            </script>
-        @endif
-        @if ($errors->any())
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Terjadi Kesalahan',
-                    html: `{!! implode('<br>', $errors->all()) !!}`,
-                    showConfirmButton: true,
                 });
             </script>
         @endif

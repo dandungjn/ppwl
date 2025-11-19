@@ -19,7 +19,10 @@
                                 <div class="row mb-3 align-items-center">
                                     <label class="col-sm-2 col-form-label" for="name">Nama Kategori</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nama kategori" value="{{ old('name', $category->name) }}">
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Nama kategori" value="{{ old('name', $category->name) }}">
+                                        @error('name')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row justify-content-end">
