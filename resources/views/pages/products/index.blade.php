@@ -2,12 +2,14 @@
     @section('title', 'Daftar Produk')
     @section('content')
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h1 class="mb-2 fw-bold">Daftar Produk</h1>
-            {{-- Breadcrumb --}}
-            <x-breadcrumb :items="[
+            <x-page-header title="Daftar Produk" :breadcrumb="[
                 'Produk' => route('products.index'),
                 'Daftar Produk' => '',
-            ]" />
+            ]">
+                <a href="{{ route('products.create') }}" class="btn btn-primary d-flex align-items-center">
+                    <i class="bx bx-plus"></i> Tambah Produk
+                </a>
+            </x-page-header>
             <!-- Responsive Table -->
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -76,7 +78,8 @@
                                     <td>3</td>
                                     <td>
                                         <img src="../assets/img/avatars/5.png" alt="Produk 3" class="imgthumbnail"
-                                            width="80"></td>
+                                            width="80">
+                                    </td>
                                     <td>Lemari Arsip Besi</td>
                                     <td>Lemari arsip besi 4 pintu untuk menyimpan dokumen penting.</td>
                                     <td>Rp 3.750.000</td>

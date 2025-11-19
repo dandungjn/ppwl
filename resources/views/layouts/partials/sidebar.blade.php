@@ -19,10 +19,18 @@
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
+        {{-- Master --}}
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Master</span></li>
         <li class="menu-item {{ request()->routeIs('products.*') ? 'active' : '' }}">
             <a href="{{ route('products.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-box"></i>
                 <div data-i18n="Products">Products</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('categories.*') ? 'active' : '' }}">
+            <a href="{{ route('categories.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-box"></i>
+                <div data-i18n="Categories">Categories</div>
             </a>
         </li>
     </ul>

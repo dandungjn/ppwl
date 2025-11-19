@@ -1,6 +1,6 @@
 @props(['items' => []])
 
-<nav aria-label="breadcrumb" class="mb-5">
+<nav aria-label="breadcrumb">
     <ol class="breadcrumb fs-5">
         @foreach ($items as $label => $url)
             @if ($loop->last || empty($url))
