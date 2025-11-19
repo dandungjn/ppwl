@@ -17,7 +17,15 @@ class ProductController extends Controller
         $search = $request->input('search');
         $query = Product::with('category');
         if ($search) {
-            $query->where('name', 'like', "%{$search}%");
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('price', 'like', "%{$search}%")
+                  ->orWhere('stock', 'like', "%{$search}%")
+                  ->orWhereHas('category', function($qc) use ($search) {
+                      $qc->where('name', 'like', "%{$search}%");
+                  });
+            });
         }
         $products = $query->paginate($perPage)->appends(['search' => $search]);
         return view('pages.products.index', compact('products'));
