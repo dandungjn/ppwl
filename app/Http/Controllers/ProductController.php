@@ -8,41 +8,51 @@ use App\Models\Category;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // =====================
+    // Views
+    // =====================
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
         $search = $request->input('search');
         $query = Product::with('category');
         if ($search) {
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('price', 'like', "%{$search}%")
-                  ->orWhere('stock', 'like', "%{$search}%")
-                  ->orWhereHas('category', function($qc) use ($search) {
-                      $qc->where('name', 'like', "%{$search}%");
-                  });
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('price', 'like', "%{$search}%")
+                    ->orWhere('stock', 'like', "%{$search}%")
+                    ->orWhereHas('category', function ($qc) use ($search) {
+                        $qc->where('name', 'like', "%{$search}%");
+                    });
             });
         }
         $products = $query->paginate($perPage)->appends(['search' => $search]);
         return view('pages.products.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $categories = Category::all();
         return view('pages.products.create', compact('categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function show(string $id)
+    {
+        $product = Product::with('category')->findOrFail($id);
+        return view('pages.products.show', compact('product'));
+    }
+
+    public function edit(string $id)
+    {
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        return view('pages.products.edit', compact('product', 'categories'));
+    }
+
+    // =====================
+    // Action / APIs
+    // =====================
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -60,28 +70,7 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $product = Product::with('category')->findOrFail($id);
-        return view('pages.products.show', compact('product'));
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $product = Product::findOrFail($id);
-        $categories = Category::all();
-        return view('pages.products.edit', compact('product', 'categories'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
@@ -100,9 +89,6 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produk berhasil diupdate.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
