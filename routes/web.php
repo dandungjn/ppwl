@@ -1,17 +1,18 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-// Admin
 Route::get('/dashboard', function () {
     return view('pages.dashboard.index');
 })->middleware(['auth', 'verified', 'admin'])->name('dashboard');
 
-// User
 Route::get('/', function () {
     return view('pages.home.index');
 })->name('home');
+
+Route::resource('/products', ProductController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
