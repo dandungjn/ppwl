@@ -14,20 +14,26 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <!-- Search & Per Page Form -->
-                    <form action="{{ route('categories.index') }}" method="GET" class="d-flex align-items-center"
-                        style="width: 100%; gap: 1rem;">
-                        <input type="text" name="search" class="form-control me-2" placeholder="Cari..."
-                            value="{{ request('search') }}" style="max-width: 300px;">
-                        <select name="per_page" class="form-select me-2" style="width: 100px;" onchange="this.form.submit()">
-                            @foreach([5, 10, 20, 50, 100] as $size)
-                                <option value="{{ $size }}" @if(request('per_page', 10) == $size) selected @endif>
-                                    {{ $size }}/halaman
-                                </option>
-                            @endforeach
-                        </select>
-                        <button class="btn btn-primary btn-sm" type="submit">
-                            <i class="bx bx-search"></i>
-                        </button>
+                    <form action="{{ route('categories.index') }}" method="GET"
+                        class="d-flex align-items-center justify-content-between" style="width: 100%; gap: 1rem;">
+                        <div class="d-flex flex-column">
+                            <label for="per_page">Data per halaman:</label>
+                            <select id="per_page" name="per_page" class="form-select me-2" style="width: 100px;"
+                                onchange="this.form.submit()">
+                                @foreach ([5, 10, 20, 50, 100] as $size)
+                                    <option value="{{ $size }}" @if (request('per_page', 10) == $size) selected @endif>
+                                        {{ $size }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="d-flex">
+                            <input type="text" name="search" class="form-control me-2" placeholder="Cari..."
+                                value="{{ request('search') }}" style="max-width: 300px;">
+                            <button class="btn btn-primary btn-sm" type="submit">
+                                <i class="bx bx-search"></i>
+                            </button>
+                        </div>
                     </form>
                 </div>
                 <div class="card-body">
@@ -73,7 +79,7 @@
                     </div>
                     <!-- Pagination -->
                     <div class="mt-3 d-flex justify-content-end">
-                        {{ $categories->links('vendor.pagination.sneat') }}
+                        {{ $categories->appends(request()->except('page'))->links('vendor.pagination.sneat') }}
                     </div>
                 </div>
             </div>
