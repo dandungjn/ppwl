@@ -1,4 +1,8 @@
-<x-guest-layout>
+@extends('layouts.auth')
+
+@section('title', 'Make your account')
+
+@section('content')
     <div class="card">
         <div class="card-body">
             <div class="app-brand justify-content-center mb-4">
@@ -15,14 +19,18 @@
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input id="name" type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required autofocus autocomplete="name">
+                    <input id="name" type="text" name="name"
+                        class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required
+                        autofocus autocomplete="name">
                     @error('name')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="username">
+                    <input id="email" type="email" name="email"
+                        class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required
+                        autocomplete="username">
                     @error('email')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -30,7 +38,10 @@
                 <div class="mb-3 form-password-toggle">
                     <label class="form-label" for="password">Password</label>
                     <div class="input-group input-group-merge">
-                        <input id="password" type="password" name="password" class="form-control @error('password') is-invalid @enderror" required autocomplete="new-password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
+                        <input id="password" type="password" name="password"
+                            class="form-control @error('password') is-invalid @enderror" required
+                            autocomplete="new-password"
+                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                     </div>
                     @error('password')
@@ -40,7 +51,10 @@
                 <div class="mb-3 form-password-toggle">
                     <label class="form-label" for="password_confirmation">Confirm Password</label>
                     <div class="input-group input-group-merge">
-                        <input id="password_confirmation" type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" required autocomplete="new-password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
+                        <input id="password_confirmation" type="password" name="password_confirmation"
+                            class="form-control @error('password_confirmation') is-invalid @enderror" required
+                            autocomplete="new-password"
+                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                     </div>
                     @error('password_confirmation')
@@ -65,4 +79,4 @@
             </p>
         </div>
     </div>
-</x-guest-layout>
+@endsection

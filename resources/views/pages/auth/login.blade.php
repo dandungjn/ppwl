@@ -1,4 +1,8 @@
-<x-guest-layout>
+@extends('layouts.auth')
+
+@section('title', 'Sign into your account')
+
+@section('content')
     <div class="card">
         <div class="card-body">
             <div class="app-brand justify-content-center mb-4">
@@ -17,7 +21,9 @@
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autofocus autocomplete="username">
+                    <input id="email" type="email" name="email"
+                        class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required
+                        autofocus autocomplete="username">
                     @error('email')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -32,7 +38,10 @@
                         @endif
                     </div>
                     <div class="input-group input-group-merge">
-                        <input id="password" type="password" name="password" class="form-control @error('password') is-invalid @enderror" required autocomplete="current-password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
+                        <input id="password" type="password" name="password"
+                            class="form-control @error('password') is-invalid @enderror" required
+                            autocomplete="current-password"
+                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                     </div>
                     @error('password')
@@ -41,7 +50,8 @@
                 </div>
                 <div class="mb-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="remember_me" name="remember" {{ old('remember') ? 'checked' : '' }} />
+                        <input class="form-check-input" type="checkbox" id="remember_me" name="remember"
+                            {{ old('remember') ? 'checked' : '' }} />
                         <label class="form-check-label" for="remember_me"> Remember Me </label>
                     </div>
                 </div>
@@ -57,4 +67,4 @@
             </p>
         </div>
     </div>
-</x-guest-layout>
+@endsection
