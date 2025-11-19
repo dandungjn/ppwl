@@ -24,13 +24,13 @@
         <li class="menu-item {{ request()->routeIs('products.*') ? 'active' : '' }}">
             <a href="{{ route('products.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="Products">Products</div>
+                <div data-i18n="Products">Produk</div>
             </a>
         </li>
         <li class="menu-item {{ request()->routeIs('categories.*') ? 'active' : '' }}">
             <a href="{{ route('categories.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="Categories">Categories</div>
+                <i class="menu-icon tf-icons bx bx-category"></i>
+                <div data-i18n="Categories">Kategori</div>
             </a>
         </li>
     </ul>
