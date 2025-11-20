@@ -3,6 +3,13 @@
 
     @section('content')
         <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="d-flex align-items-center">
+                <span style="font-size:2.5rem;" class="me-1">🎉</span>
+                <h4 class="mb-0 fw-bold text-primary">Selamat datang di halaman Dashboard UTS PPWL!</h4>
+            </div>
+            <p class="mb-4 text-secondary">Kelola produk dan kategori dengan mudah, nikmati fitur modern dan tampilan
+                menarik berbasis Laravel.</p>
+            </p>
             <div class="row">
                 <div class="col-lg-6 col-md-6 mb-4">
                     <div class="card h-100">
