@@ -16,6 +16,7 @@ trait HasDatatable
             'index' => true,
             'action' => true,
             'extra_columns' => [], // ['country' => fn($row) => $row->country->name]
+            'raw_columns' => [], // columns that should be treated as raw HTML
         ], $config);
 
         $datatable = DataTables::of($query);
@@ -33,7 +34,18 @@ trait HasDatatable
         // Action column
         if ($config['action']) {
             $datatable->addColumn('action', fn($row) => static::defaultActions($row));
-            $datatable->rawColumns(['action']);
+        }
+
+        // Raw columns from config (always include 'action' when action column is enabled)
+        $rawCols = [];
+        if ($config['action']) {
+            $rawCols[] = 'action';
+        }
+        if (!empty($config['raw_columns'])) {
+            $rawCols = array_merge($rawCols, (array) $config['raw_columns']);
+        }
+        if (!empty($rawCols)) {
+            $datatable->rawColumns(array_values(array_unique($rawCols)));
         }
 
         return $datatable->make(true);

@@ -19,7 +19,20 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return Order::datatable();
+            return Order::datatable(null, [
+                'extra_columns' => [
+                    'status' => function ($row) {
+                        $s = strtolower($row->status ?? 'pending');
+                        $labelClass = 'bg-label-warning';
+                        if ($s === 'paid') $labelClass = 'bg-label-success';
+                        if ($s === 'cancelled') $labelClass = 'bg-label-danger';
+
+                        $label = ucfirst($s);
+                        return "<span class=\"badge {$labelClass} rounded-pill\">{$label}</span>";
+                    },
+                ],
+                'raw_columns' => ['status'],
+            ]);
         }
 
         return view('pages.orders.index');

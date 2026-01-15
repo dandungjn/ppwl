@@ -14,6 +14,7 @@
                     <x-form.input name="name" label="Nama Furniture" :value="$furniture->name" />
                     <x-form.input name="price" label="Price" :value="$furniture->price" />
                     <x-form.input name="image" type="file" label="Image" />
+                    <x-ui.current-image :src="$furniture->image" />
                     <x-form.input name="stock" label="Stock" :value="$furniture->stock" />
                     <x-form.textarea name="description" label="Description" :value="$furniture->description" />
                     <x-form.actions cancel="{{ route('furniture.index') }}" submitLabel="Update" />
