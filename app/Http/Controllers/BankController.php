@@ -36,11 +36,6 @@ class BankController extends Controller
             ->with('success', 'Bank created successfully.');
     }
 
-    public function show(Bank $bank)
-    {
-        return view('pages.banks.show', compact('bank'));
-    }
-
     public function edit(Bank $bank)
     {
         return view('pages.banks.edit', compact('bank'));

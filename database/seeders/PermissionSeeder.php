@@ -12,6 +12,10 @@ class PermissionSeeder extends Seeder
     {
         $modules = [
             'banks',
+            'categories',
+            'furniture',
+            'orders',
+            'order-details',
         ];
 
         foreach ($modules as $module) {

@@ -119,7 +119,7 @@
         <div class="container text-center">
             <p class="mb-0">
                 <b>
-                    &copy; {{ date('Y') }} Dung Store
+                    &copy; {{ date('Y') }} DungStore
                 </b>
                 — All rights reserved.
             </p>

@@ -12,17 +12,17 @@
                 </x-ui.button>
             </x-page-header>
 
-            <x-datatable-card :id="'expenses-table'" :ajax="route('expenses.index')" :columns="[
+            <x-datatable-card id="expenses-table" ajax="{{ route('expenses.index') }}" :columns="[
                 ['data' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
                 ['data' => 'number', 'title' => 'Number'],
-                ['data' => 'date', 'title' => 'Date'],
+                ['data' => 'date', 'title' => 'Date', 'format' => 'tanggal'],
                 ['data' => 'category', 'title' => 'Category'],
                 ['data' => 'description', 'title' => 'Description'],
-                ['data' => 'amount', 'title' => 'Amount'],
+                ['data' => 'amount', 'title' => 'Amount', 'format' => 'rupiah'],
                 ['data' => 'user', 'title' => 'User'],
                 ['data' => 'user_modified', 'title' => 'User Modified'],
                 ['data' => 'action', 'title' => 'Actions', 'orderable' => false, 'searchable' => false],
-            ]" :options="null" />
+            ]" />
         </x-page-container>
     @endsection
 </x-app-layout>

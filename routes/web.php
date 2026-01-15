@@ -1,21 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BankController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\GroupController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\PositionController;
-use App\Http\Controllers\ItemController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ExpenseController;
-use App\Http\Controllers\QuotationController;
-use App\Http\Controllers\JobOrderController;
-use App\Http\Controllers\DeliveryReceiptController;
-use App\Http\Controllers\SimpleSearchController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FurnitureController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,7 +22,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('banks', BankController::class);
-       
+    Route::resource('categories', CategoryController::class);
+    Route::resource('furniture', FurnitureController::class);
+    Route::resource('orders', OrderController::class);
+    Route::resource('order-details', OrderDetailController::class);
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
