@@ -11,7 +11,6 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $modules = [
-            'banks',
             'categories',
             'furniture',
             'orders',

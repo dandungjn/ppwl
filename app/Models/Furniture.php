@@ -11,7 +11,7 @@ class Furniture extends Model
 {
     use HasFactory, SoftDeletes, HasDatatable;
     
-    protected $table = 'furniture';
+    protected $table = 'furniture'; // This line is already correct
 
     protected $fillable = [
         'category_id',

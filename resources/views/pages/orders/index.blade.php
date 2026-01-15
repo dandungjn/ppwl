@@ -12,8 +12,9 @@
             </x-page-header>
             <x-datatable-card :id="'orders-table'" :ajax="route('orders.index')" :columns="[
                 ['data' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
-                ['data' => 'user_id', 'title' => 'User'],
-                ['data' => 'total', 'title' => 'Total'],
+                ['data' => 'customer_name', 'title' => 'Customer'],
+                ['data' => 'total_price', 'title' => 'Total', 'format' => 'rupiah'],
+                ['data' => 'status', 'title' => 'Status'],
                 ['data' => 'action', 'title' => 'Actions', 'orderable' => false, 'searchable' => false],
             ]" :options="null" />
         </div>

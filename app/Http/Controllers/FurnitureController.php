@@ -6,6 +6,9 @@ use App\Http\Requests\FurnitureRequest;
 use App\Models\Category;
 use App\Models\Furniture;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Str;
 
 class FurnitureController extends Controller
 {
@@ -17,22 +20,56 @@ class FurnitureController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return Furniture::datatable();
+            $query = Furniture::query();
+
+            return DataTables::of($query)
+                ->addIndexColumn()
+                ->addColumn('image', function ($row) {
+                    return view('components.ui.image-thumb', ['src' => $row->image])->render();
+                })
+                ->addColumn('action', function ($row) {
+                    $modelName = class_basename($row);
+                    $kebab = Str::kebab($modelName);
+                    $plural = Str::plural($kebab);
+
+                    $user = auth()->user();
+                    $html = '';
+
+                    if ($user->can("$plural.edit")) {
+                        $editUrl = route("$plural.edit", $row->id);
+                        $html .= '<a href="' . $editUrl . '" class="h3 text-info mb-0 me-2"><i class="mdi mdi-pencil"></i></a>';
+                    }
+
+                    if ($user->can("$plural.delete")) {
+                        $deleteUrl = route("$plural.destroy", $row->id);
+                        $html .= '<form action="' . $deleteUrl . '" method="POST" style="display:inline-block;">' . csrf_field() . method_field('DELETE') . '<button type="submit" class="h3 border-0 bg-transparent text-danger mb-0 btn-confirm" data-title="Delete ' . ucfirst($kebab) . '" data-text="Are you sure you want to delete this ' . $kebab . '?"><i class="mdi mdi-delete"></i></button></form>';
+                    }
+
+                    return $html ?: '-';
+                })
+                ->rawColumns(['action', 'image'])
+                ->make(true);
         }
 
-        return view('pages.furniture.index');
+        return view('pages.furnitures.index');
     }
 
     public function create()
     {
         $categories = Category::pluck('name', 'id');
 
-        return view('pages.furniture.create', compact('categories'));
+        return view('pages.furnitures.create', compact('categories'));
     }
 
     public function store(FurnitureRequest $request)
     {
-        Furniture::create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('furnitures', 'public');
+        }
+
+        Furniture::create($data);
 
         return redirect()->route('furniture.index')->with('success', 'Furniture created successfully.');
     }
@@ -41,18 +78,31 @@ class FurnitureController extends Controller
     {
         $categories = Category::pluck('name', 'id');
 
-        return view('pages.furniture.edit', compact('furniture', 'categories'));
+        return view('pages.furnitures.edit', compact('furniture', 'categories'));
     }
 
     public function update(FurnitureRequest $request, Furniture $furniture)
     {
-        $furniture->update($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            if ($furniture->image) {
+                Storage::disk('public')->delete($furniture->image);
+            }
+            $data['image'] = $request->file('image')->store('furnitures', 'public');
+        }
+
+        $furniture->update($data);
 
         return redirect()->route('furniture.index')->with('success', 'Furniture updated successfully.');
     }
 
     public function destroy(Furniture $furniture)
     {
+        if ($furniture->image) {
+            Storage::disk('public')->delete($furniture->image);
+        }
+
         $furniture->delete();
 
         return redirect()->route('furniture.index')->with('success', 'Furniture deleted successfully.');

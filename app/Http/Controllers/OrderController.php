@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Furniture;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -18,28 +21,62 @@ class OrderController extends Controller
         if ($request->ajax()) {
             return Order::datatable();
         }
+
         return view('pages.orders.index');
     }
 
     public function create()
     {
-        return view('pages.orders.create');
+        $furnitures = Furniture::pluck('name', 'id');
+        $furniturePrices = Furniture::pluck('price', 'id');
+        return view('pages.orders.create', compact('furnitures', 'furniturePrices'));
     }
 
     public function store(OrderRequest $request)
     {
-        Order::create($request->validated());
+        $data = $request->validated();
+
+        DB::transaction(function () use ($data) {
+            $orderDetails = $data['order_details'];
+            unset($data['order_details']);
+
+
+            $order = Order::create($data);
+
+            foreach ($orderDetails as $od) {
+                $od['order_id'] = $order->id;
+                OrderDetail::create($od);
+            }
+        });
+
         return redirect()->route('orders.index')->with('success', 'Order created successfully.');
     }
 
     public function edit(Order $order)
     {
-        return view('pages.orders.edit', compact('order'));
+        $furnitures = Furniture::pluck('name', 'id');
+        $furniturePrices = Furniture::pluck('price', 'id');
+        $order->load('orderDetails');
+        return view('pages.orders.edit', compact('order', 'furnitures', 'furniturePrices'));
     }
 
     public function update(OrderRequest $request, Order $order)
     {
-        $order->update($request->validated());
+        $data = $request->validated();
+
+        DB::transaction(function () use ($order, $data) {
+            $orderDetails = $data['order_details'];
+            unset($data['order_details']);
+
+            $order->update($data);
+
+            $order->orderDetails()->delete();
+            foreach ($orderDetails as $od) {
+                $od['order_id'] = $order->id;
+                OrderDetail::create($od);
+            }
+        });
+
         return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
     }
 

@@ -15,7 +15,7 @@ class OrderDetailRequest extends FormRequest
     {
         return [
             'order_id' => 'required|exists:orders,id',
-            'furniture_id' => 'required|exists:furnitures,id',
+            'furniture_id' => 'required|exists:furniture,id',
             'quantity' => 'required|integer|min:1',
             'price' => 'nullable|numeric',
         ];

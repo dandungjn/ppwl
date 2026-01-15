@@ -18,11 +18,9 @@ return [
     ['type' => 'item', 'route' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'mdi-view-dashboard'],
 
     ['type' => 'header', 'title' => 'Master Data'],
-    ['type' => 'item', 'route' => 'banks.*', 'label' => 'Bank', 'icon' => 'mdi-bank'],
     ['type' => 'item', 'route' => 'categories.*', 'label' => 'Category', 'icon' => 'mdi-shape'],
     ['type' => 'item', 'route' => 'furniture.*', 'label' => 'Furniture', 'icon' => 'mdi-sofa'],
     ['type' => 'item', 'route' => 'orders.*', 'label' => 'Order', 'icon' => 'mdi-cart'],
-    ['type' => 'item', 'route' => 'order-details.*', 'label' => 'Order Detail', 'icon' => 'mdi-receipt'],
 
     // [
     //     'type' => 'submenu',

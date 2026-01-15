@@ -19,6 +19,10 @@ class OrderRequest extends FormRequest
             'customer_phone_number' => 'required|string|max:20',
             'total_price' => 'required|numeric',
             'status' => 'nullable|string',
+            'order_details' => 'required|array|min:1',
+            'order_details.*.furniture_id' => 'required|exists:furniture,id',
+            'order_details.*.quantity' => 'required|integer|min:1',
+            'order_details.*.price' => 'required|numeric',
         ];
     }
 }

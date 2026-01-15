@@ -76,9 +76,6 @@
                             <i class="bx bx-briefcase text-primary" style="font-size: 2.5rem;"></i>
                             <h5 class="card-title text-primary fw-bold mt-3">Manajemen Proyek</h5>
                             <p class="card-text">Tambah, edit, hapus, dan pantau proyek dengan mudah.</p>
-                            @auth
-                                <a href="" class="btn btn-primary">Kelola Proyek</a>
-                            @endauth
                         </div>
                     </div>
                 </div>
@@ -90,9 +87,6 @@
                             <i class="bx bx-user text-primary" style="font-size: 2.5rem;"></i>
                             <h5 class="card-title text-primary fw-bold mt-3">Manajemen Karyawan</h5>
                             <p class="card-text">Kelola data karyawan, tim, dan peran dengan efisien.</p>
-                            @auth
-                                <a href="" class="btn btn-primary">Kelola Karyawan</a>
-                            @endauth
                         </div>
                     </div>
                 </div>
@@ -104,9 +98,6 @@
                             <i class="bx bx-bell text-primary" style="font-size: 2.5rem;"></i>
                             <h5 class="card-title text-primary fw-bold mt-3">Validasi & Notifikasi</h5>
                             <p class="card-text">Dapatkan feedback instan saat mengelola data proyek dan karyawan.</p>
-                            @auth
-                                <a href="{{ route('dashboard') }}" class="btn btn-primary">Pergi ke Dashboard</a>
-                            @endauth
                         </div>
                     </div>
                 </div>
