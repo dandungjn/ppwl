@@ -32,31 +32,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('banks', BankController::class);
-    Route::resource('clients', ClientController::class);
-    Route::resource('companies', CompanyController::class);
-    Route::resource('groups', GroupController::class);
-    Route::resource('blogs', BlogController::class);
-    Route::resource('positions', PositionController::class);
-    Route::resource('employees', EmployeeController::class);
-    Route::resource('items', ItemController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('roles', RoleController::class);
-    Route::resource('expenses', ExpenseController::class);
-    Route::resource('quotations', QuotationController::class);
-    Route::resource('job-orders', JobOrderController::class);
-    Route::resource('delivery-receipts', DeliveryReceiptController::class);
-
-    // PDF routes (existing)
-    Route::get('quotations/{id}/pdf/download', [QuotationController::class, 'downloadPdf'])->name('quotations.pdf.download');
-    Route::get('quotations/{id}/pdf/preview', [QuotationController::class, 'previewPdf'])->name('quotations.pdf.preview');
-    Route::get('delivery-receipts/{id}/pdf/preview', [DeliveryReceiptController::class, 'previewPdf'])->name('delivery-receipts.pdf.preview');
-    Route::get('delivery-receipts/{id}/pdf/download', [DeliveryReceiptController::class, 'downloadPdf'])->name('delivery-receipts.pdf.download');
-
-    // Simple Search PDF routes (harus sebelum resource)
-    Route::get('simple-searches/export/pdf', [SimpleSearchController::class, 'exportPdf'])->name('simple-searches.export.pdf');
-    Route::get('simple-searches/{id}/pdf/preview', [SimpleSearchController::class, 'previewPdf'])->name('simple-searches.pdf.preview');
-    Route::get('simple-searches/{id}/pdf/download', [SimpleSearchController::class, 'downloadPdf'])->name('simple-searches.pdf.download');
-    Route::resource('simple-searches', SimpleSearchController::class);
        
 });
 
