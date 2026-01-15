@@ -131,7 +131,7 @@
                         <img src="{{ public_path('icons/application-logo.png') }}" style="width:1.2cm; display:block;">
                     </td>
                     <td style="padding:0 0 0 0.3cm; border:0; vertical-align:middle;">
-                        <div class="company-name">PT Nigmagrid Indo Nesia</div>
+                        <div class="company-name">Dung Store</div>
                     </td>
                 </tr>
             </table>
@@ -232,7 +232,7 @@
 <!-- ================= SIGNATURE (ANTI PAGE BREAK) ================= -->
 <div style="margin-top:1.2cm; width:40%;">
     Hormat kami,<br>
-    <strong>PT Nigmagrid Indo Nesia</strong><br>
+    <strong>Dung Store</strong><br>
     <br><br><br><br>
     <strong>{{ $quotation->company?->leader_name ?? '' }}</strong><br>
     Direktur

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\BankRequest;
 use App\Models\Bank;
+use Illuminate\Http\Request;
 
 class BankController extends Controller
 {
@@ -26,47 +27,40 @@ class BankController extends Controller
         return view('pages.banks.create');
     }
 
-    public function store(Request $request)
+    public function store(BankRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:50',
-            'account_number' => 'required|string|max:50',
-            'account_holder' => 'required|string|max:50',
-            'status' => 'required|integer',
-        ]);
-        Bank::create($request->all());
-        return redirect()->route('banks.index')->with('success', 'Bank created successfully.');
+        Bank::create($request->validated());
+
+        return redirect()
+            ->route('banks.index')
+            ->with('success', 'Bank created successfully.');
     }
 
-    public function show($id)
+    public function show(Bank $bank)
     {
-        $bank = Bank::findOrFail($id);
         return view('pages.banks.show', compact('bank'));
     }
 
-    public function edit($id)
+    public function edit(Bank $bank)
     {
-        $bank = Bank::findOrFail($id);
         return view('pages.banks.edit', compact('bank'));
     }
 
-    public function update(Request $request, $id)
+    public function update(BankRequest $request, Bank $bank)
     {
-        $request->validate([
-            'name' => 'required|string|max:50',
-            'account_number' => 'required|string|max:50',
-            'account_holder' => 'required|string|max:50',
-            'status' => 'required|integer',
-        ]);
-        $bank = Bank::findOrFail($id);
-        $bank->update($request->all());
-        return redirect()->route('banks.index')->with('success', 'Bank updated successfully.');
+        $bank->update($request->validated());
+
+        return redirect()
+            ->route('banks.index')
+            ->with('success', 'Bank updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Bank $bank)
     {
-        $bank = Bank::findOrFail($id);
         $bank->delete();
-        return redirect()->route('banks.index')->with('success', 'Bank deleted successfully.');
+
+        return redirect()
+            ->route('banks.index')
+            ->with('success', 'Bank deleted successfully.');
     }
 }

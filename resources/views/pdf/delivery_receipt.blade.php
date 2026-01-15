@@ -129,7 +129,7 @@
                     <img src="{{ public_path('icons/application-logo.png') }}" class="logo">
                 </td>
                 <td class="company-name">
-                    PT Nigmagrid Indo Nesia
+                    Dung Store
                 </td>
             </tr>
         </table>
@@ -165,8 +165,8 @@
 
     <!-- FOOTER -->
     <div class="footer">
-        www.nigmagrid.net<br>
-        Puri Botanical H9-8<br>
+        www.dungstore.com<br>
+        America<br>
         Jakarta Barat 11640<br>
         Indonesia<br>
         62 21 589066608

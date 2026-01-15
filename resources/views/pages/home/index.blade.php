@@ -119,7 +119,7 @@
         <div class="container text-center">
             <p class="mb-0">
                 <b>
-                    &copy; {{ date('Y') }} Nigmagrid
+                    &copy; {{ date('Y') }} Dung Store
                 </b>
                 — All rights reserved.
             </p>
