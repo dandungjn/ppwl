@@ -18,14 +18,14 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     @auth
                         <li class="nav-item mx-1">
-                            <a class="btn btn-primary px-4" href="{{ route('dashboard') }}">Dashboard</a>
+                            <a class="btn btn-primary px-4" href="{{ route('dashboard') }}">Dashboard Toko</a>
                         </li>
                     @else
                         <li class="nav-item mx-1">
-                            <a class="btn btn-primary px-4" href="{{ route('login') }}">Login</a>
+                            <a class="btn btn-primary px-4" href="{{ route('login') }}">Masuk</a>
                         </li>
                         <li class="nav-item mx-1">
-                            <a class="btn btn-outline-primary px-4" href="{{ route('register') }}">Register</a>
+                            <a class="btn btn-outline-primary px-4" href="{{ route('register') }}">Daftar</a>
                         </li>
                     @endauth
                 </ul>
@@ -40,24 +40,28 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <h1 class="display-5 fw-bold mb-3 text-primary">
-                        Selamat Datang di {{ config('app.name') }}
+                        Kelola Toko Anda Lebih Mudah
                     </h1>
                     <p class="lead text-secondary">
-                        Aplikasi manajemen proyek, karyawan, dan data bisnis berbasis Laravel & Sneat. Kelola data proyek, tim, karyawan, pencatatan, pencarian, dan notifikasi dengan mudah.
+                        {{ config('app.name') }} adalah aplikasi manajemen toko berbasis web untuk membantu Anda
+                        mengelola furnitur, stok barang, transaksi penjualan, pelanggan, serta laporan keuangan
+                        secara efisien dan terintegrasi.
                     </p>
                     <div class="mt-4">
                         <a href="{{ route('login') }}" class="btn btn-primary btn-lg px-4 me-2">
-                            Mulai Manajemen
+                            Mulai Kelola Toko
                         </a>
-                        <a href="" class="btn btn-outline-primary btn-lg px-4">
-                            Lihat Proyek
+                        <a href="#features" class="btn btn-outline-primary btn-lg px-4">
+                            Lihat Fitur
                         </a>
                     </div>
                 </div>
 
                 <div class="col-lg-6 text-center mt-4 mt-lg-0">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" class="img-fluid"
-                        style="max-width: 350px;" alt="Product Management Illustration">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png"
+                        class="img-fluid"
+                        style="max-width: 350px;"
+                        alt="Store Management Illustration">
                 </div>
             </div>
         </div>
@@ -66,38 +70,44 @@
     <!-- Features Section -->
     <section id="features" class="py-5">
         <div class="container">
-            <h2 class="fw-bold text-center text-primary mb-5">Fitur Utama</h2>
+            <h2 class="fw-bold text-center text-primary mb-5">Fitur Utama Manajemen Toko</h2>
 
             <div class="row g-4">
-                <!-- Card 1: Proyek -->
+                <!-- Card 1: furnitur & Stok -->
                 <div class="col-md-4">
                     <div class="card shadow-sm h-100">
                         <div class="card-body text-center">
-                            <i class="bx bx-briefcase text-primary" style="font-size: 2.5rem;"></i>
-                            <h5 class="card-title text-primary fw-bold mt-3">Manajemen Proyek</h5>
-                            <p class="card-text">Tambah, edit, hapus, dan pantau proyek dengan mudah.</p>
+                            <i class="bx bx-package text-primary" style="font-size: 2.5rem;"></i>
+                            <h5 class="card-title text-primary fw-bold mt-3">Manajemen furnitur & Stok</h5>
+                            <p class="card-text">
+                                Kelola data furnitur, kategori, harga, dan stok barang secara real-time.
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 2: Karyawan -->
+                <!-- Card 2: Penjualan -->
                 <div class="col-md-4">
                     <div class="card shadow-sm h-100">
                         <div class="card-body text-center">
-                            <i class="bx bx-user text-primary" style="font-size: 2.5rem;"></i>
-                            <h5 class="card-title text-primary fw-bold mt-3">Manajemen Karyawan</h5>
-                            <p class="card-text">Kelola data karyawan, tim, dan peran dengan efisien.</p>
+                            <i class="bx bx-cart text-primary" style="font-size: 2.5rem;"></i>
+                            <h5 class="card-title text-primary fw-bold mt-3">Transaksi Penjualan</h5>
+                            <p class="card-text">
+                                Catat transaksi penjualan dengan cepat, rapi, dan terintegrasi.
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 3: Notifikasi & Validasi -->
+                <!-- Card 3: Laporan -->
                 <div class="col-md-4">
                     <div class="card shadow-sm h-100">
                         <div class="card-body text-center">
-                            <i class="bx bx-bell text-primary" style="font-size: 2.5rem;"></i>
-                            <h5 class="card-title text-primary fw-bold mt-3">Validasi & Notifikasi</h5>
-                            <p class="card-text">Dapatkan feedback instan saat mengelola data proyek dan karyawan.</p>
+                            <i class="bx bx-line-chart text-primary" style="font-size: 2.5rem;"></i>
+                            <h5 class="card-title text-primary fw-bold mt-3">Laporan & Analisis</h5>
+                            <p class="card-text">
+                                Pantau laporan penjualan, stok, dan keuntungan untuk pengambilan keputusan.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -110,9 +120,9 @@
         <div class="container text-center">
             <p class="mb-0">
                 <b>
-                    &copy; {{ date('Y') }} DungStore
+                    &copy; {{ date('Y') }} {{ config('app.name') }}
                 </b>
-                — All rights reserved.
+                — Sistem Manajemen Toko.
             </p>
         </div>
     </footer>
