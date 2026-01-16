@@ -3,7 +3,7 @@
     <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
         <div class="mb-2 mb-md-0">
             &copy; <script>document.write(new Date().getFullYear());</script> made by
-            <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">DungStore</a>
+            <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">{{ config('app.name', 'Laravel') }}</a>
         </div>
         <div>
             <a href="" class="footer-link me-4" target="_blank">Social</a>
