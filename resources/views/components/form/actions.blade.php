@@ -1,18 +1,14 @@
 @props([
     'cancel',
     'text' => 'Simpan',
-    'col' => 10,
+    'submitLabel' => 'Simpan',
 ])
-<div class="row justify-content-end mt-4">
-    <div class="col-sm-{{ $col }} d-flex">
+<div class="d-flex gap-2 justify-content-end mt-4">
+    <a href="{{ $cancel }}" class="btn btn-secondary">
+        <i class="mdi mdi-close"></i> Batal
+    </a>
 
-        <button type="submit" class="btn btn-primary d-flex align-items-center gap-1">
-            <i class="mdi mdi-content-save"></i> {{ $text }}
-        </button>
-
-        <a href="{{ $cancel }}" class="btn btn-secondary ms-2">
-            Batal
-        </a>
-
-    </div>
+    <button type="submit" class="btn btn-primary d-flex align-items-center gap-1">
+        <i class="mdi mdi-content-save"></i> {{ $submitLabel ?? $text }}
+    </button>
 </div>
