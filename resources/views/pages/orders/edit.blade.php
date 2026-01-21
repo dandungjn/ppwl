@@ -35,7 +35,7 @@
                             ->toArray()" :furniture-prices="$furniturePrices" />
                     </div>
                     <div class="d-flex justify-content-end">
-                        <x-form.actions cancel="{{ route('orders.index') }}" submitLabel="Update" />
+                        <x-form.actions col="0" cancel="{{ route('orders.index') }}" submitLabel="Update" />
                     </div>
                 </form>
             </x-form.card>

@@ -6,7 +6,7 @@
                 'Category' => route('categories.index'),
                 'Daftar Category' => '',
             ]">
-                <x-ui.button href="{{ route('categories.create') }}" color="primary" icon="plus" permission="categories.create">
+                <x-ui.button href="{{ route('categories.create') }}" color="primary" icon="plus">
                     Tambah Category
                 </x-ui.button>
             </x-page-header>

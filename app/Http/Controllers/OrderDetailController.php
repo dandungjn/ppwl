@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class OrderDetailController extends Controller
 {
-    public function __construct()
-    {
-        $this->applyResourcePermissions('order_details');
-    }
-
     public function index(Request $request)
     {
         if ($request->ajax()) {

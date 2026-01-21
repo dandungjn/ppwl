@@ -12,11 +12,6 @@ use Illuminate\Support\Str;
 
 class FurnitureController extends Controller
 {
-    public function __construct()
-    {
-        $this->applyResourcePermissions('furnitures');
-    }
-
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -32,20 +27,25 @@ class FurnitureController extends Controller
                     $kebab = Str::kebab($modelName);
                     $plural = Str::plural($kebab);
 
-                    $user = auth()->user();
-                    $html = '';
+                    $editUrl = route("$plural.edit", $row->id);
+                    $deleteUrl = route("$plural.destroy", $row->id);
 
-                    if ($user->can("$plural.edit")) {
-                        $editUrl = route("$plural.edit", $row->id);
-                        $html .= '<a href="' . $editUrl . '" class="h3 text-info mb-0 me-2"><i class="mdi mdi-pencil"></i></a>';
-                    }
+                    return '
+                        <a href="' . $editUrl . '" class="h3 text-info mb-0 me-2">
+                            <i class="mdi mdi-pencil"></i>
+                        </a>
 
-                    if ($user->can("$plural.delete")) {
-                        $deleteUrl = route("$plural.destroy", $row->id);
-                        $html .= '<form action="' . $deleteUrl . '" method="POST" style="display:inline-block;">' . csrf_field() . method_field('DELETE') . '<button type="submit" class="h3 border-0 bg-transparent text-danger mb-0 btn-confirm" data-title="Delete ' . ucfirst($kebab) . '" data-text="Are you sure you want to delete this ' . $kebab . '?"><i class="mdi mdi-delete"></i></button></form>';
-                    }
-
-                    return $html ?: '-';
+                        <form action="' . $deleteUrl . '" method="POST" style="display:inline-block;">
+                            ' . csrf_field() . method_field('DELETE') . '
+                            <button type="submit"
+                                class="h3 border-0 bg-transparent text-danger mb-0 btn-confirm"
+                                data-title="Delete ' . ucfirst($kebab) . '"
+                                data-text="Are you sure you want to delete this ' . $kebab . '?"
+                            >
+                                <i class="mdi mdi-delete"></i>
+                            </button>
+                        </form>
+                    ';
                 })
                 ->rawColumns(['action', 'image'])
                 ->make(true);

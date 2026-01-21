@@ -6,7 +6,7 @@
                 'Furniture' => route('furniture.index'),
                 'Daftar Furniture' => '',
             ]">
-                <x-ui.button href="{{ route('furniture.create') }}" color="primary" icon="plus" permission="furniture.create">
+                <x-ui.button href="{{ route('furniture.create') }}" color="primary" icon="plus">
                     Tambah Furniture
                 </x-ui.button>
             </x-page-header>

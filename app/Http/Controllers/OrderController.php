@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->applyResourcePermissions('orders');
-    }
-
     public function index(Request $request)
     {
         if ($request->ajax()) {

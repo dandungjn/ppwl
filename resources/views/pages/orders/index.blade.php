@@ -6,7 +6,7 @@
                 'Order' => route('orders.index'),
                 'Daftar Order' => '',
             ]">
-                <x-ui.button href="{{ route('orders.create') }}" color="primary" icon="plus" permission="orders.create">
+                <x-ui.button href="{{ route('orders.create') }}" color="primary" icon="plus">
                     Tambah Order
                 </x-ui.button>
             </x-page-header>

@@ -3,12 +3,7 @@
     'type' => 'button',
     'color' => 'primary',
     'icon' => null,
-    'permission' => null,
 ])
-
-@if ($permission && !auth()->user()?->can($permission))
-    @php return; @endphp
-@endif
 
 @php
     $classes = "btn btn-$color d-flex align-items-center gap-1";

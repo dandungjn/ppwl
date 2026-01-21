@@ -15,8 +15,8 @@ trait HasDatatable
         $config = array_merge([
             'index' => true,
             'action' => true,
-            'extra_columns' => [], // ['country' => fn($row) => $row->country->name]
-            'raw_columns' => [], // columns that should be treated as raw HTML
+            'extra_columns' => [],
+            'raw_columns' => [],
         ], $config);
 
         $datatable = DataTables::of($query);
@@ -33,10 +33,10 @@ trait HasDatatable
 
         // Action column
         if ($config['action']) {
-            $datatable->addColumn('action', fn($row) => static::defaultActions($row));
+            $datatable->addColumn('action', fn ($row) => static::defaultActions($row));
         }
 
-        // Raw columns from config (always include 'action' when action column is enabled)
+        // Raw columns
         $rawCols = [];
         if ($config['action']) {
             $rawCols[] = 'action';
@@ -51,39 +51,27 @@ trait HasDatatable
         return $datatable->make(true);
     }
 
-
     /**
-     * Default actions (can be overridden in Model)
+     * Default actions
      */
     protected static function defaultActions($row)
     {
         $modelName = class_basename($row);
-
         $kebab = Str::kebab($modelName);
-
         $plural = Str::plural($kebab);
 
-        $user = auth()->user();
-        $html = '';
+        $editUrl = route("$plural.edit", $row->id);
+        $deleteUrl = route("$plural.destroy", $row->id);
 
-        $canEdit = $user->can("$plural.edit");
-        $canDelete = $user->can("$plural.delete");
-
-        if ($canEdit) {
-            $editUrl = route("$plural.edit", $row->id);
-            $html .= '
+        return '
             <a href="' . $editUrl . '" class="h3 text-info mb-0 me-2">
                 <i class="mdi mdi-pencil"></i>
             </a>
-        ';
-        }
 
-        if ($canDelete) {
-            $deleteUrl = route("$plural.destroy", $row->id);
-            $html .= '
             <form action="' . $deleteUrl . '" method="POST" style="display:inline-block;">
                 ' . csrf_field() . method_field('DELETE') . '
-                <button type="submit" class="h3 border-0 bg-transparent text-danger mb-0 btn-confirm"
+                <button type="submit"
+                    class="h3 border-0 bg-transparent text-danger mb-0 btn-confirm"
                     data-title="Delete ' . ucfirst($kebab) . '"
                     data-text="Are you sure you want to delete this ' . $kebab . '?"
                 >
@@ -91,8 +79,5 @@ trait HasDatatable
                 </button>
             </form>
         ';
-        }
-
-        return $html ?: '-';
     }
 }
