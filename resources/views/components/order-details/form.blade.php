@@ -65,6 +65,7 @@
                     });
 
                     this.items.forEach((it, idx) => this.updatePrice(idx));
+                    this.calculateTotal();
                 },
                 add() {
                     this.items.push({
@@ -72,9 +73,11 @@
                         quantity: 1,
                         price: 0
                     });
+                    this.calculateTotal();
                 },
                 remove(i) {
                     this.items.splice(i, 1);
+                    this.calculateTotal();
                 },
                 updatePrice(index) {
                     const it = this.items[index];
@@ -82,6 +85,16 @@
                     const qty = parseFloat(it.quantity) || 0;
                     const base = parseFloat(this.furniturePrices[fid] ?? 0) || 0;
                     this.items[index].price = (base * qty).toFixed(2);
+                    this.calculateTotal();
+                },
+                calculateTotal() {
+                    const total = this.items.reduce((sum, item) => {
+                        return sum + (parseFloat(item.price) || 0);
+                    }, 0);
+                    const totalInput = document.querySelector('input[name="total_price"]');
+                    if (totalInput) {
+                        totalInput.value = total.toFixed(2);
+                    }
                 }
             }
         }

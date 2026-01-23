@@ -14,8 +14,14 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return Order::datatable(null, [
+            return Order::datatable(Order::query()->with('orderDetails.furniture'), [
                 'extra_columns' => [
+                    'order_items' => function ($row) {
+                        $items = $row->orderDetails->map(function ($detail) {
+                            return $detail->furniture->name . ' ' . $detail->quantity . 'x';
+                        })->join(', ');
+                        return $items ?: '-';
+                    },
                     'status' => function ($row) {
                         $s = strtolower($row->status ?? 'pending');
                         $labelClass = 'bg-label-warning';

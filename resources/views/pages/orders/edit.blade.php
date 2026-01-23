@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-md-6">
                             <x-form.select name="status" label="Status" :options="['pending' => 'Pending', 'paid' => 'Paid', 'cancelled' => 'Cancelled']" :selected="$order->status" />
-                            <x-form.input name="total_price" label="Total Price" :value="$order->total_price" />
+                            <x-form.input name="total_price" label="Total Price" :value="$order->total_price" readonly />
                         </div>
                     </div>
 

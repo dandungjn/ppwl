@@ -13,6 +13,7 @@
             <x-datatable-card :id="'orders-table'" :ajax="route('orders.index')" :columns="[
                 ['data' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
                 ['data' => 'customer_name', 'title' => 'Customer'],
+                ['data' => 'order_items', 'title' => 'Order Details', 'orderable' => false],
                 ['data' => 'total_price', 'title' => 'Total', 'format' => 'rupiah'],
                 ['data' => 'status', 'title' => 'Status'],
                 ['data' => 'action', 'title' => 'Actions', 'orderable' => false, 'searchable' => false],

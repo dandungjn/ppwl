@@ -15,12 +15,18 @@ class FurnitureController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Furniture::query();
+            $query = Furniture::query()
+                ->withSum('orderDetails', 'quantity');
 
             return DataTables::of($query)
                 ->addIndexColumn()
                 ->addColumn('image', function ($row) {
                     return view('components.ui.image-thumb', ['src' => $row->image])->render();
+                })
+                ->editColumn('stock', function ($row) {
+                    $orderedQty = $row->order_details_sum_quantity ?? 0;
+                    $availableStock = $row->stock - $orderedQty;
+                    return $availableStock;
                 })
                 ->addColumn('action', function ($row) {
                     $modelName = class_basename($row);
